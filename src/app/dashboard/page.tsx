@@ -18,11 +18,11 @@ export default async function DashboardPage() {
     .eq('id', user.id)
     .single()
 
+  const welcomeName = member?.full_name ? `, ${member.full_name}` : ''
+
   return (
     <div className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-2xl font-bold">
-        Welcome{member?.full_name ? ,  : ''}
-      </h1>
+      <h1 className="text-2xl font-bold">Welcome{welcomeName}</h1>
       {gym && <p className="text-gray-400 mt-1">{gym.name}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
