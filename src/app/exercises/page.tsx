@@ -12,6 +12,7 @@ export default async function ExercisesPage() {
   const { data: exercises } = await supabase
     .from('exercises')
     .select('*')
+    .not('media_url', 'is', null)
     .order('muscle_group')
 
   const grouped: Record<string, typeof exercises> = {}
@@ -31,21 +32,9 @@ export default async function ExercisesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {list?.map((ex) => (
               <div key={ex.id} className="rounded-lg border border-gray-700 overflow-hidden flex flex-col">
-                {ex.media_url ? (
-                  <img src={ex.media_url} alt={ex.name} className="w-full h-40 object-cover bg-gray-900" />
-                ) : (
-                  <div className="w-full h-40 flex items-center justify-center bg-gray-900 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M6.5 6.5 17.5 17.5" />
-                      <path d="M21 21l-1-1" />
-                      <path d="M3 3l1 1" />
-                      <path d="M18 22l4-4" />
-                      <path d="M2 6l4-4" />
-                      <path d="M3 10l7-7" />
-                      <path d="M14 21l7-7" />
-                    </svg>
-                  </div>
-                )}
+                <div className="w-full h-40 bg-gray-900 flex items-center justify-center p-2">
+                  <img src={ex.media_url} alt={ex.name} className="max-w-full max-h-full object-contain" />
+                </div>
                 <div className="p-3 flex-1">
                   <h3 className="font-semibold">{ex.name}</h3>
                   <p className="text-sm text-gray-400 mt-1">{ex.instructions}</p>
