@@ -43,7 +43,16 @@ export default async function AdminPage() {
     activityCount[r.member_id] = (activityCount[r.member_id] || 0) + 1
   })
 
-  const activeCount = members?.filter((m) => m.subscription_status === 'active').length || 0
+  const today = new Date().toISOString().split('T')[0]
+
+  function computeStatus(m: any) {
+    if (m.subscription_expires_on && m.subscription_expires_on < today) {
+      return 'expired'
+    }
+    return m.subscription_status
+  }
+
+  const activeCount = members?.filter((m) => computeStatus(m) === 'active').length || 0
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -76,7 +85,7 @@ export default async function AdminPage() {
                 <td className="p-3">
                   <SubscriptionEditor
                     memberId={m.id}
-                    currentStatus={m.subscription_status}
+                    currentStatus={computeStatus(m)}
                     currentExpiresOn={m.subscription_expires_on}
                   />
                 </td>

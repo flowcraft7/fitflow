@@ -16,38 +16,48 @@ export default function SubscriptionEditor({
   const [expiresOn, setExpiresOn] = useState(currentExpiresOn || '')
   const [loading, setLoading] = useState(false)
 
-  const handleSave = async () => {
-    setLoading(true)
-    await updateSubscription(memberId, status as any, expiresOn || null)
-    setLoading(false)
-  }
-
   const statusColor =
     status === 'active' ? 'text-green-400' : status === 'expired' ? 'text-red-400' : 'text-gray-400'
 
+  const handleMarkPaid = async () => {
+    setLoading(true)
+    const newExpiry = new Date()
+    newExpiry.setMonth(newExpiry.getMonth() + 1)
+    const newExpiryStr = newExpiry.toISOString().split('T')[0]
+
+    setStatus('active')
+    setExpiresOn(newExpiryStr)
+    await updateSubscription(memberId, 'active', newExpiryStr)
+    setLoading(false)
+  }
+
+  const handleMarkInactive = async () => {
+    setLoading(true)
+    setStatus('inactive')
+    setExpiresOn('')
+    await updateSubscription(memberId, 'inactive', null)
+    setLoading(false)
+  }
+
   return (
     <div className="flex items-center gap-2">
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className={`bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs ${statusColor}`}
-      >
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-        <option value="expired">Expired</option>
-      </select>
-      <input
-        type="date"
-        value={expiresOn}
-        onChange={(e) => setExpiresOn(e.target.value)}
-        className="bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs"
-      />
+      <span className={`text-xs font-semibold capitalize ${statusColor}`}>{status}</span>
+      {expiresOn && (
+        <span className="text-xs text-gray-500">until {new Date(expiresOn).toLocaleDateString()}</span>
+      )}
       <button
-        onClick={handleSave}
+        onClick={handleMarkPaid}
         disabled={loading}
         className="bg-white text-black rounded px-2 py-1 text-xs font-semibold disabled:opacity-50"
       >
-        {loading ? '...' : 'Save'}
+        Mark Paid (+1mo)
+      </button>
+      <button
+        onClick={handleMarkInactive}
+        disabled={loading}
+        className="bg-gray-800 text-white rounded px-2 py-1 text-xs disabled:opacity-50"
+      >
+        Deactivate
       </button>
     </div>
   )
