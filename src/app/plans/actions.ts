@@ -16,6 +16,7 @@ export async function generateWorkoutPlan(goal: string, daysPerWeek: number) {
   const { data: exercises } = await supabase
     .from('exercises')
     .select('id, name, muscle_group')
+    .limit(60)
 
   if (!exercises || exercises.length === 0) {
     return { error: 'No exercises available' }
@@ -30,7 +31,7 @@ export async function generateWorkoutPlan(goal: string, daysPerWeek: number) {
 Choose ONLY from this exercise list (format: id|name|muscle_group):
 ${exerciseList}
 
-Respond ONLY with valid JSON, no markdown, no explanation, in this exact format:
+Respond ONLY with valid JSON in this exact format, no markdown, no extra text:
 {
   "title": "Plan title",
   "days": [
@@ -45,20 +46,26 @@ Respond ONLY with valid JSON, no markdown, no explanation, in this exact format:
 
 Pick 4-6 exercises per day. Use real exercise_id values from the list above.`
 
-  const completion = await groq.chat.completions.create({
-    model: 'openai/gpt-oss-120b',
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.7,
-  })
-
-  const raw = completion.choices[0]?.message?.content || ''
-  const cleaned = raw.replace(/```json|```/g, '').trim()
+  let raw = ''
+  try {
+    const completion = await groq.chat.completions.create({
+      model: 'openai/gpt-oss-120b',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.6,
+      max_tokens: 2000,
+      response_format: { type: 'json_object' },
+    })
+    raw = completion.choices[0]?.message?.content || ''
+  } catch (err: any) {
+    return { error: 'AI request failed: ' + err.message }
+  }
 
   let plan
   try {
+    const cleaned = raw.replace(/```json|```/g, '').trim()
     plan = JSON.parse(cleaned)
   } catch {
-    return { error: 'Failed to parse AI response' }
+    return { error: 'Failed to parse AI response: ' + raw.slice(0, 300) }
   }
 
   const { data: gymMember } = await supabase
