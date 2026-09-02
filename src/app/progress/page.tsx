@@ -17,10 +17,20 @@ export default async function ProgressPage() {
     .eq('member_id', user.id)
     .order('logged_at', { ascending: true })
 
+  const { count: completedCount } = await supabase
+    .from('exercise_completions')
+    .select('*', { count: 'exact', head: true })
+    .eq('member_id', user.id)
+
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <a href="/dashboard" className="text-sm text-gray-400">&larr; Back to Dashboard</a>
       <h1 className="text-2xl font-bold mt-2 mb-6">Progress</h1>
+
+      <div className="rounded-lg border border-gray-700 p-4 mb-6">
+        <p className="text-sm text-gray-400">Total exercises completed</p>
+        <p className="text-3xl font-bold mt-1">{completedCount || 0}</p>
+      </div>
 
       <ProgressLogger />
 
