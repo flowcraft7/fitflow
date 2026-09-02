@@ -38,6 +38,12 @@ export default async function DashboardPage() {
           <h2 className="font-semibold">Progress</h2>
           <p className="text-sm text-gray-400">Weight, steps & measurements</p>
         </a>
+        {member?.role === 'admin' && (
+          <a href="/admin" className="rounded-lg border border-gray-700 p-4 hover:bg-gray-900">
+            <h2 className="font-semibold">Admin Panel</h2>
+            <p className="text-sm text-gray-400">Manage gym members</p>
+          </a>
+        )}
       </div>
     </div>
   )

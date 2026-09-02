@@ -22,6 +22,18 @@ export default async function ProgressPage() {
     .select('*', { count: 'exact', head: true })
     .eq('member_id', user.id)
 
+  const { data: completions } = await supabase
+    .from('exercise_completions')
+    .select('completed_on, plan_exercises(day_label, exercises(name))')
+    .eq('member_id', user.id)
+    .order('completed_on', { ascending: false })
+
+  const byDate: Record<string, any[]> = {}
+  completions?.forEach((c: any) => {
+    if (!byDate[c.completed_on]) byDate[c.completed_on] = []
+    byDate[c.completed_on].push(c)
+  })
+
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <a href="/dashboard" className="text-sm text-gray-400">&larr; Back to Dashboard</a>
@@ -41,7 +53,7 @@ export default async function ProgressPage() {
       )}
 
       <div className="mt-8">
-        <h2 className="font-semibold mb-3">History</h2>
+        <h2 className="font-semibold mb-3">Weight/Steps History</h2>
         <div className="space-y-2">
           {logs?.slice().reverse().map((log) => (
             <div key={log.id} className="rounded-lg border border-gray-700 p-3 text-sm flex justify-between">
@@ -55,6 +67,34 @@ export default async function ProgressPage() {
               </span>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <h2 className="font-semibold mb-3">Workout Log</h2>
+        <div className="space-y-4">
+          {Object.entries(byDate).map(([date, items]) => (
+            <div key={date} className="rounded-lg border border-gray-700 p-3">
+              <p className="text-sm text-gray-400 mb-2">
+                {new Date(date).toLocaleDateString(undefined, {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </p>
+              <ul className="text-sm space-y-1">
+                {items.map((item: any, i: number) => (
+                  <li key={i}>
+                    {item.plan_exercises?.exercises?.name}
+                    {item.plan_exercises?.day_label ? ` (${item.plan_exercises.day_label})` : ''}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          {Object.keys(byDate).length === 0 && (
+            <p className="text-sm text-gray-500">No workouts logged yet.</p>
+          )}
         </div>
       </div>
     </div>
