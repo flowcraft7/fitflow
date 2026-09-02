@@ -90,10 +90,12 @@ Pick 4-6 exercises per day. Use real exercise_id values from the list above.`
     return { error: planError?.message || 'Failed to save plan' }
   }
 
+  const insertErrors: string[] = []
+
   for (const day of plan.days) {
     for (let i = 0; i < day.exercises.length; i++) {
       const ex = day.exercises[i]
-      await supabase.from('plan_exercises').insert({
+      const { error: peError } = await supabase.from('plan_exercises').insert({
         plan_id: workoutPlan.id,
         exercise_id: ex.exercise_id,
         sets: ex.sets,
@@ -101,7 +103,12 @@ Pick 4-6 exercises per day. Use real exercise_id values from the list above.`
         order_index: i,
         day_label: day.day_label,
       })
+      if (peError) insertErrors.push(peError.message)
     }
+  }
+
+  if (insertErrors.length > 0) {
+    return { error: 'Some exercises failed to save: ' + insertErrors[0] }
   }
 
   return { success: true, planId: workoutPlan.id }
