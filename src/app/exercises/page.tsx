@@ -12,7 +12,6 @@ export default async function ExercisesPage() {
   const { data: exercises } = await supabase
     .from('exercises')
     .select('*')
-    .not('media_url', 'is', null)
     .order('muscle_group')
 
   const grouped: Record<string, typeof exercises> = {}
@@ -32,8 +31,8 @@ export default async function ExercisesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {list?.map((ex) => (
               <div key={ex.id} className="rounded-lg border border-gray-700 overflow-hidden flex flex-col">
-                <div className="w-full h-40 bg-gray-900 flex items-center justify-center p-2">
-                  <img src={ex.media_url} alt={ex.name} className="max-w-full max-h-full object-contain" />
+                <div className="w-full h-48 bg-black">
+                  <img src={ex.media_url} alt={ex.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-3 flex-1">
                   <h3 className="font-semibold">{ex.name}</h3>
