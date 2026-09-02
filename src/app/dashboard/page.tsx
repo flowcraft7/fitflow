@@ -18,12 +18,35 @@ export default async function DashboardPage() {
     .eq('id', user.id)
     .single()
 
+  const { data: announcements } = await supabase
+    .from('announcements')
+    .select('*')
+    .eq('gym_id', member?.gym_id)
+    .order('created_at', { ascending: false })
+    .limit(5)
+
   const welcomeName = member?.full_name ? `, ${member.full_name}` : ''
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <h1 className="text-2xl font-bold">Welcome{welcomeName}</h1>
       {gym && <p className="text-gray-400 mt-1">{gym.name}</p>}
+
+      {announcements && announcements.length > 0 && (
+        <div className="mt-6 rounded-lg border border-gray-700 p-4">
+          <h2 className="font-semibold mb-3">Announcements</h2>
+          <div className="space-y-2">
+            {announcements.map((a) => (
+              <div key={a.id} className="text-sm bg-gray-900 rounded-md p-2">
+                <p>{a.message}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {new Date(a.created_at).toLocaleDateString()}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
         <a href="/exercises" className="rounded-lg border border-gray-700 p-4 hover:bg-gray-900">
