@@ -92,6 +92,7 @@ Pick 4-6 exercises per day. Use real exercise_id values from the list above.`
         sets: ex.sets,
         reps: ex.reps,
         order_index: i,
+        day_label: day.day_label,
       })
     }
   }
