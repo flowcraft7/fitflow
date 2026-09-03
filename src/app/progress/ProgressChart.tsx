@@ -13,15 +13,15 @@ export default function ProgressChart({ logs }: { logs: any[] }) {
   if (data.length < 2) return null
 
   return (
-    <div className="rounded-lg border border-gray-700 p-4">
-      <h2 className="font-semibold mb-3">Weight Trend</h2>
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+      <h2 className="font-semibold mb-4">Weight Trend</h2>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-          <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
-          <YAxis stroke="#9ca3af" fontSize={12} />
-          <Tooltip contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151' }} />
-          <Line type="monotone" dataKey="weight" stroke="#ffffff" strokeWidth={2} dot={{ fill: '#ffffff' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2a2a28" />
+          <XAxis dataKey="date" stroke="#8a8a85" fontSize={12} />
+          <YAxis stroke="#8a8a85" fontSize={12} />
+          <Tooltip contentStyle={{ backgroundColor: '#171717', border: '1px solid #2a2a28', borderRadius: '8px' }} />
+          <Line type="monotone" dataKey="weight" stroke="#22c55e" strokeWidth={2} dot={{ fill: '#22c55e' }} />
         </LineChart>
       </ResponsiveContainer>
     </div>

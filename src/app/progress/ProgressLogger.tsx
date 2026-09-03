@@ -36,8 +36,8 @@ export default function ProgressLogger() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-lg border border-gray-700 p-4">
-      <h2 className="font-semibold mb-3">Log Today</h2>
+    <form onSubmit={handleSubmit} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+      <h2 className="font-semibold mb-4">Log Today</h2>
       <div className="flex flex-col sm:flex-row gap-3">
         <input
           type="number"
@@ -45,31 +45,31 @@ export default function ProgressLogger() {
           placeholder="Weight (kg)"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm flex-1"
+          className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:border-[var(--color-positive)]"
         />
         <input
           type="number"
           placeholder="Steps"
           value={steps}
           onChange={(e) => setSteps(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm flex-1"
+          className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:border-[var(--color-positive)]"
         />
         <input
           type="text"
           placeholder="Notes (optional)"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm flex-1"
+          className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:border-[var(--color-positive)]"
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-white text-black rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50"
+          className="bg-[var(--color-positive)] text-black rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
           {loading ? 'Saving...' : 'Log Entry'}
         </button>
       </div>
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
     </form>
   )
 }

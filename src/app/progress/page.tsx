@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import ProgressLogger from './ProgressLogger'
 import ProgressChart from './ProgressChart'
+import Nav from '@/components/Nav'
 
 export default async function ProgressPage() {
   const supabase = await createClient()
@@ -35,13 +36,17 @@ export default async function ProgressPage() {
   })
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <a href="/dashboard" className="text-sm text-gray-400">&larr; Back to Dashboard</a>
-      <h1 className="text-2xl font-bold mt-2 mb-6">Progress</h1>
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] p-6 max-w-4xl mx-auto">
+      <Nav backHref="/dashboard" />
 
-      <div className="rounded-lg border border-gray-700 p-4 mb-6">
-        <p className="text-sm text-gray-400">Total exercises completed</p>
-        <p className="text-3xl font-bold mt-1">{completedCount || 0}</p>
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-1 h-8 bg-[var(--color-positive)] rounded-full" />
+        <h1 className="text-3xl font-bold tracking-tight">Progress</h1>
+      </div>
+
+      <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 mb-6">
+        <p className="text-sm text-[var(--color-text-muted)]">Total exercises completed</p>
+        <p className="text-4xl font-bold mt-1 text-[var(--color-positive)]">{completedCount || 0}</p>
       </div>
 
       <ProgressLogger />
@@ -53,11 +58,16 @@ export default async function ProgressPage() {
       )}
 
       <div className="mt-8">
-        <h2 className="font-semibold mb-3">Weight/Steps History</h2>
+        <h2 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-3">
+          Weight/Steps History
+        </h2>
         <div className="space-y-2">
           {logs?.slice().reverse().map((log) => (
-            <div key={log.id} className="rounded-lg border border-gray-700 p-3 text-sm flex justify-between">
-              <span className="text-gray-400">
+            <div
+              key={log.id}
+              className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-sm flex justify-between"
+            >
+              <span className="text-[var(--color-text-muted)]">
                 {new Date(log.logged_at).toLocaleDateString()}
               </span>
               <span>
@@ -71,11 +81,13 @@ export default async function ProgressPage() {
       </div>
 
       <div className="mt-8">
-        <h2 className="font-semibold mb-3">Workout Log</h2>
+        <h2 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-3">
+          Workout Log
+        </h2>
         <div className="space-y-4">
           {Object.entries(byDate).map(([date, items]) => (
-            <div key={date} className="rounded-lg border border-gray-700 p-3">
-              <p className="text-sm text-gray-400 mb-2">
+            <div key={date} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+              <p className="text-sm text-[var(--color-text-muted)] mb-2">
                 {new Date(date).toLocaleDateString(undefined, {
                   weekday: 'short',
                   month: 'short',
@@ -84,7 +96,8 @@ export default async function ProgressPage() {
               </p>
               <ul className="text-sm space-y-1">
                 {items.map((item: any, i: number) => (
-                  <li key={i}>
+                  <li key={i} className="flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-[var(--color-positive)]" />
                     {item.plan_exercises?.exercises?.name}
                     {item.plan_exercises?.day_label ? ` (${item.plan_exercises.day_label})` : ''}
                   </li>
@@ -93,7 +106,7 @@ export default async function ProgressPage() {
             </div>
           ))}
           {Object.keys(byDate).length === 0 && (
-            <p className="text-sm text-gray-500">No workouts logged yet.</p>
+            <p className="text-sm text-[var(--color-text-muted)]">No workouts logged yet.</p>
           )}
         </div>
       </div>

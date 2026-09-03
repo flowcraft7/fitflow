@@ -38,8 +38,9 @@ export default async function ExercisesPage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {list?.map((ex) => (
-              <div
+              <a
                 key={ex.id}
+                href={`/exercises/${ex.id}`}
                 className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden flex flex-col hover:border-[var(--color-warn)] transition-colors"
               >
                 <div className="w-full h-48 bg-black">
@@ -47,9 +48,9 @@ export default async function ExercisesPage() {
                 </div>
                 <div className="p-4 flex-1">
                   <h3 className="font-semibold">{ex.name}</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] mt-1">{ex.instructions}</p>
+                  <p className="text-sm text-[var(--color-text-muted)] mt-1 line-clamp-3">{ex.instructions}</p>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
