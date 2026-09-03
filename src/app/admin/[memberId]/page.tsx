@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import AssignPlanForm from './AssignPlanForm'
+import Nav from '@/components/Nav'
 
 export default async function MemberDetailPage({
   params,
@@ -44,17 +45,26 @@ export default async function MemberDetailPage({
     .select('id, name, muscle_group')
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <a href="/admin" className="text-sm text-gray-400">&larr; Back to Admin</a>
-      <h1 className="text-2xl font-bold mt-2 mb-6">{member?.full_name || 'Member'}</h1>
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] p-6 max-w-4xl mx-auto">
+      <Nav backHref="/admin" backLabel="Admin" />
+
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-1 h-8 bg-[var(--color-accent)] rounded-full" />
+        <h1 className="text-3xl font-bold tracking-tight">{member?.full_name || 'Member'}</h1>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h2 className="font-semibold mb-3">Weight/Steps Log</h2>
+          <h2 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-3">
+            Weight/Steps Log
+          </h2>
           <div className="space-y-2">
             {logs?.map((log) => (
-              <div key={log.id} className="rounded-md border border-gray-700 p-2 text-sm flex justify-between">
-                <span className="text-gray-400">{new Date(log.logged_at).toLocaleDateString()}</span>
+              <div
+                key={log.id}
+                className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-2 text-sm flex justify-between"
+              >
+                <span className="text-[var(--color-text-muted)]">{new Date(log.logged_at).toLocaleDateString()}</span>
                 <span>
                   {log.weight_kg ? `${log.weight_kg} kg` : ''}
                   {log.steps ? ` · ${log.steps} steps` : ''}
@@ -62,19 +72,21 @@ export default async function MemberDetailPage({
               </div>
             ))}
             {(!logs || logs.length === 0) && (
-              <p className="text-gray-500 text-sm">No logs yet.</p>
+              <p className="text-[var(--color-text-muted)] text-sm">No logs yet.</p>
             )}
           </div>
         </div>
 
         <div>
-          <h2 className="font-semibold mb-3">Workout Plans</h2>
+          <h2 className="text-sm font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-3">
+            Workout Plans
+          </h2>
           <div className="space-y-3">
             {plans?.map((plan) => (
-              <div key={plan.id} className="rounded-md border border-gray-700 p-3 text-sm">
+              <div key={plan.id} className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-sm">
                 <p className="font-semibold">{plan.title}</p>
-                <p className="text-gray-400 text-xs mb-2">{plan.goal}</p>
-                <ul className="text-gray-400 space-y-1">
+                <p className="text-[var(--color-text-muted)] text-xs mb-2">{plan.goal}</p>
+                <ul className="text-[var(--color-text-muted)] space-y-1">
                   {plan.plan_exercises?.map((pe: any) => (
                     <li key={pe.id}>
                       {pe.exercises?.name} — {pe.sets}x{pe.reps}
@@ -84,7 +96,7 @@ export default async function MemberDetailPage({
               </div>
             ))}
             {(!plans || plans.length === 0) && (
-              <p className="text-gray-500 text-sm">No plans yet.</p>
+              <p className="text-[var(--color-text-muted)] text-sm">No plans yet.</p>
             )}
           </div>
         </div>

@@ -44,12 +44,12 @@ export default function AdminMemberTable({
           placeholder="Search by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm flex-1"
+          className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:border-[var(--color-accent)]"
         />
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm"
+          className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-accent)]"
         >
           <option value="all">All</option>
           <option value="active">Active</option>
@@ -58,28 +58,28 @@ export default function AdminMemberTable({
         </select>
       </div>
 
-      <div className="rounded-lg border border-gray-700 overflow-x-auto">
+      <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-900 text-left">
+          <thead className="bg-[var(--color-bg)] text-left">
             <tr>
-              <th className="p-3">Name</th>
-              <th className="p-3">Role</th>
-              <th className="p-3">Joined</th>
-              <th className="p-3">Workouts (7d)</th>
-              <th className="p-3">Subscription</th>
-              <th className="p-3">Actions</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Name</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Role</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Joined</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Workouts (7d)</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Subscription</th>
+              <th className="p-3 text-[var(--color-text-muted)] font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filtered.map((m) => (
-              <tr key={m.id} className="border-t border-gray-800">
+              <tr key={m.id} className="border-t border-[var(--color-border)]">
                 <td className="p-3">
-                  <a href={`/admin/${m.id}`} className="hover:underline">
+                  <a href={`/admin/${m.id}`} className="hover:text-[var(--color-accent)] transition-colors">
                     {m.full_name || '—'}
                   </a>
                 </td>
                 <td className="p-3 capitalize">{m.role}</td>
-                <td className="p-3 text-gray-400">
+                <td className="p-3 text-[var(--color-text-muted)]">
                   {new Date(m.created_at).toLocaleDateString()}
                 </td>
                 <td className="p-3">{activityCount[m.id] || 0}</td>
@@ -105,7 +105,7 @@ export default function AdminMemberTable({
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={6} className="p-3 text-center text-gray-500">
+                <td colSpan={6} className="p-3 text-center text-[var(--color-text-muted)]">
                   No members found.
                 </td>
               </tr>

@@ -4,6 +4,7 @@ import AdminMemberTable from './AdminMemberTable'
 import AddMemberForm from './AddMemberForm'
 import AnnouncementBoard from './AnnouncementBoard'
 import RevenuePanel from './RevenuePanel'
+import Nav from '@/components/Nav'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -60,10 +61,14 @@ export default async function AdminPage() {
     }).length || 0
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <a href="/dashboard" className="text-sm text-gray-400">&larr; Back to Dashboard</a>
-      <h1 className="text-2xl font-bold mt-2 mb-1">{gym?.name} — Admin</h1>
-      <p className="text-gray-400 mb-6">{members?.length || 0} members</p>
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] p-6 max-w-6xl mx-auto">
+      <Nav backHref="/dashboard" />
+
+      <div className="flex items-center gap-3 mb-1">
+        <div className="w-1 h-8 bg-[var(--color-accent)] rounded-full" />
+        <h1 className="text-3xl font-bold tracking-tight">{gym?.name} — Admin</h1>
+      </div>
+      <p className="text-[var(--color-text-muted)] mb-6 ml-4">{members?.length || 0} members</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <RevenuePanel currentPrice={gym?.price_per_member || 0} activeCount={activeCount} />

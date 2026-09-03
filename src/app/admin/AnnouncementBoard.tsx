@@ -24,7 +24,7 @@ export default function AnnouncementBoard({ announcements }: { announcements: an
   }
 
   return (
-    <div className="rounded-lg border border-gray-700 p-4">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h2 className="font-semibold mb-3">Announcements</h2>
       <div className="flex gap-2 mb-4">
         <input
@@ -32,22 +32,22 @@ export default function AnnouncementBoard({ announcements }: { announcements: an
           placeholder="Write an announcement..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="flex-1 bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm"
+          className="flex-1 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-accent)]"
         />
         <button
           onClick={handlePost}
           disabled={loading}
-          className="bg-white text-black rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50"
+          className="bg-[var(--color-accent)] text-[var(--color-accent-text)] rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
           Post
         </button>
       </div>
       <div className="space-y-2">
         {announcements.map((a) => (
-          <div key={a.id} className="flex justify-between items-start bg-gray-900 rounded-md p-2 text-sm">
+          <div key={a.id} className="flex justify-between items-start bg-[var(--color-bg)] rounded-md p-3 text-sm border border-[var(--color-border)]">
             <div>
               <p>{a.message}</p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-[var(--color-text-muted)] mt-1">
                 {new Date(a.created_at).toLocaleDateString()}
               </p>
             </div>
@@ -60,7 +60,7 @@ export default function AnnouncementBoard({ announcements }: { announcements: an
           </div>
         ))}
         {announcements.length === 0 && (
-          <p className="text-gray-500 text-sm">No announcements yet.</p>
+          <p className="text-[var(--color-text-muted)] text-sm">No announcements yet.</p>
         )}
       </div>
     </div>

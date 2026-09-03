@@ -41,29 +41,29 @@ export default function AssignPlanForm({
   }
 
   return (
-    <div className="rounded-lg border border-gray-700 p-4">
-      <h2 className="font-semibold mb-3">Assign Custom Plan</h2>
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+      <h2 className="font-semibold mb-4">Assign Custom Plan</h2>
       <div className="flex gap-2 mb-3">
         <input
           type="text"
           placeholder="Plan title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="flex-1 bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm"
+          className="flex-1 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-accent)]"
         />
         <input
           type="text"
           placeholder="Day label"
           value={dayLabel}
           onChange={(e) => setDayLabel(e.target.value)}
-          className="w-32 bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm"
+          className="w-32 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-accent)]"
         />
       </div>
 
       <select
         onChange={(e) => e.target.value && addExercise(e.target.value)}
         value=""
-        className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 text-sm mb-3"
+        className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-3 py-2 text-sm mb-3 focus:outline-none focus:border-[var(--color-accent)]"
       >
         <option value="">+ Add exercise</option>
         {exercises.map((ex) => (
@@ -73,11 +73,14 @@ export default function AssignPlanForm({
         ))}
       </select>
 
-      <div className="space-y-2 mb-3">
+      <div className="space-y-2 mb-4">
         {selected.map((s) => {
           const ex = exercises.find((e) => e.id === s.exercise_id)
           return (
-            <div key={s.exercise_id} className="flex items-center gap-2 text-sm bg-gray-900 rounded-md p-2">
+            <div
+              key={s.exercise_id}
+              className="flex items-center gap-2 text-sm bg-[var(--color-bg)] rounded-md p-2 border border-[var(--color-border)]"
+            >
               <span className="flex-1">{ex?.name}</span>
               <input
                 type="number"
@@ -89,9 +92,9 @@ export default function AssignPlanForm({
                     )
                   )
                 }
-                className="w-14 bg-gray-800 border border-gray-700 rounded px-1 py-1"
+                className="w-14 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-1 py-1"
               />
-              <span>sets x</span>
+              <span className="text-[var(--color-text-muted)]">sets x</span>
               <input
                 type="number"
                 value={s.reps}
@@ -102,9 +105,9 @@ export default function AssignPlanForm({
                     )
                   )
                 }
-                className="w-14 bg-gray-800 border border-gray-700 rounded px-1 py-1"
+                className="w-14 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-1 py-1"
               />
-              <span>reps</span>
+              <span className="text-[var(--color-text-muted)]">reps</span>
               <button
                 onClick={() => removeExercise(s.exercise_id)}
                 className="text-red-400 text-xs ml-2"
@@ -119,7 +122,7 @@ export default function AssignPlanForm({
       <button
         onClick={handleSubmit}
         disabled={loading || !title || selected.length === 0}
-        className="bg-white text-black rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50"
+        className="bg-[var(--color-accent)] text-[var(--color-accent-text)] rounded-md px-4 py-2 text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
       >
         {loading ? 'Saving...' : 'Assign Plan'}
       </button>

@@ -17,7 +17,11 @@ export default function SubscriptionEditor({
   const [loading, setLoading] = useState(false)
 
   const statusColor =
-    status === 'active' ? 'text-green-400' : status === 'expired' ? 'text-red-400' : 'text-gray-400'
+    status === 'active'
+      ? 'text-[var(--color-positive)]'
+      : status === 'expired'
+      ? 'text-red-400'
+      : 'text-[var(--color-text-muted)]'
 
   const handleMarkPaid = async () => {
     setLoading(true)
@@ -40,22 +44,24 @@ export default function SubscriptionEditor({
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 flex-wrap">
       <span className={`text-xs font-semibold capitalize ${statusColor}`}>{status}</span>
       {expiresOn && (
-        <span className="text-xs text-gray-500">until {new Date(expiresOn).toLocaleDateString()}</span>
+        <span className="text-xs text-[var(--color-text-muted)]">
+          until {new Date(expiresOn).toLocaleDateString()}
+        </span>
       )}
       <button
         onClick={handleMarkPaid}
         disabled={loading}
-        className="bg-white text-black rounded px-2 py-1 text-xs font-semibold disabled:opacity-50"
+        className="bg-[var(--color-positive)] text-black rounded px-2 py-1 text-xs font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
       >
         Mark Paid (+1mo)
       </button>
       <button
         onClick={handleMarkInactive}
         disabled={loading}
-        className="bg-gray-800 text-white rounded px-2 py-1 text-xs disabled:opacity-50"
+        className="bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] rounded px-2 py-1 text-xs disabled:opacity-50"
       >
         Deactivate
       </button>

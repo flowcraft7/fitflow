@@ -25,26 +25,26 @@ export default function RevenuePanel({
   const revenue = (parseFloat(price) || 0) * activeCount
 
   return (
-    <div className="rounded-lg border border-gray-700 p-4">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h2 className="font-semibold mb-3">Revenue</h2>
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm text-gray-400">Price per member/month:</span>
+        <span className="text-sm text-[var(--color-text-muted)]">Price/member/month:</span>
         <input
           type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          className="w-24 bg-gray-900 border border-gray-700 rounded-md px-2 py-1 text-sm"
+          className="w-24 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-md px-2 py-1 text-sm focus:outline-none focus:border-[var(--color-accent)]"
         />
         <button
           onClick={handleSave}
           disabled={loading}
-          className="bg-white text-black rounded-md px-3 py-1 text-xs font-semibold disabled:opacity-50"
+          className="bg-[var(--color-accent)] text-[var(--color-accent-text)] rounded-md px-3 py-1 text-xs font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
           Save
         </button>
       </div>
-      <p className="text-sm text-gray-400">Active members: {activeCount}</p>
-      <p className="text-2xl font-bold mt-1">Rs {revenue.toLocaleString()}/mo</p>
+      <p className="text-sm text-[var(--color-text-muted)]">Active members: {activeCount}</p>
+      <p className="text-3xl font-bold mt-1 text-[var(--color-positive)]">Rs {revenue.toLocaleString()}/mo</p>
     </div>
   )
 }
