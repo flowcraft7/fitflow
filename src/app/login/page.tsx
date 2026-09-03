@@ -44,11 +44,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg)] px-4">
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
-        <h1 className="text-2xl font-bold text-white">
-          {isSignUp ? 'Create account' : 'Sign in'}
-        </h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text)]">
+            {isSignUp ? 'Create account' : 'Sign in'}
+          </h1>
+          <p className="text-sm text-[var(--color-text-muted)] mt-1">
+            {isSignUp ? 'Start tracking your workouts' : 'Welcome back'}
+          </p>
+        </div>
 
         <input
           type="email"
@@ -56,7 +61,7 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-white"
+          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
         />
 
         <input
@@ -65,15 +70,15 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-white"
+          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
         />
 
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && <p className="text-sm text-red-400">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-white py-2 font-semibold text-black disabled:opacity-50"
+          className="w-full rounded-md bg-[var(--color-accent)] py-2.5 font-semibold text-[var(--color-accent-text)] disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
           {loading ? 'Please wait...' : isSignUp ? 'Sign up' : 'Sign in'}
         </button>
@@ -81,7 +86,7 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={() => setIsSignUp(!isSignUp)}
-          className="w-full text-sm text-gray-400"
+          className="w-full text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
         >
           {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
         </button>
