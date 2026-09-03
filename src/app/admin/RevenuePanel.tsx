@@ -13,12 +13,18 @@ export default function RevenuePanel({
 }) {
   const [price, setPrice] = useState(currentPrice.toString())
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const router = useRouter()
 
   const handleSave = async () => {
     setLoading(true)
-    await updatePricePerMember(parseFloat(price) || 0)
-    router.refresh()
+    setError('')
+    const result = await updatePricePerMember(parseFloat(price) || 0)
+    if (result.error) {
+      setError(result.error)
+    } else {
+      router.refresh()
+    }
     setLoading(false)
   }
 
@@ -40,9 +46,10 @@ export default function RevenuePanel({
           disabled={loading}
           className="bg-[var(--color-accent)] text-[var(--color-accent-text)] rounded-md px-3 py-1 text-xs font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
-          Save
+          {loading ? 'Saving...' : 'Save'}
         </button>
       </div>
+      {error && <p className="text-red-400 text-xs mb-2">{error}</p>}
       <p className="text-sm text-[var(--color-text-muted)]">Active members: {activeCount}</p>
       <p className="text-3xl font-bold mt-1 text-[var(--color-positive)]">Rs {revenue.toLocaleString()}/mo</p>
     </div>
