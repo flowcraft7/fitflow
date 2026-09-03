@@ -56,10 +56,10 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
         <a
           href="/exercises"
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:border-[var(--color-accent)] transition-colors group"
+          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:bg-[#1d1d1b] hover:border-[var(--color-warn)] hover:-translate-y-0.5 transition-all"
         >
-          <div className="w-9 h-9 rounded-md bg-[var(--color-accent)]/15 flex items-center justify-center mb-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-9 h-9 rounded-md bg-[var(--color-warn)]/15 flex items-center justify-center mb-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-warn)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6.5 6.5 17.5 17.5" />
               <path d="M21 21l-1-1" />
               <path d="M3 3l1 1" />
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
 
         <a
           href="/plans"
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:border-[var(--color-accent)] transition-colors group"
+          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:bg-[#1d1d1b] hover:border-[var(--color-accent)] hover:-translate-y-0.5 transition-all"
         >
           <div className="w-9 h-9 rounded-md bg-[var(--color-accent)]/15 flex items-center justify-center mb-3">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,10 +89,10 @@ export default async function DashboardPage() {
 
         <a
           href="/progress"
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:border-[var(--color-accent)] transition-colors group"
+          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 hover:bg-[#1d1d1b] hover:border-[var(--color-positive)] hover:-translate-y-0.5 transition-all"
         >
-          <div className="w-9 h-9 rounded-md bg-[var(--color-accent)]/15 flex items-center justify-center mb-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-9 h-9 rounded-md bg-[var(--color-positive)]/15 flex items-center justify-center mb-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-positive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 3v18h18" />
               <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
             </svg>
@@ -104,7 +104,7 @@ export default async function DashboardPage() {
         {member?.role === 'admin' && (
           <a
             href="/admin"
-            className="rounded-lg border border-[var(--color-accent)] bg-[var(--color-surface)] p-5 hover:opacity-90 transition-opacity"
+            className="rounded-lg border border-[var(--color-accent)] bg-[var(--color-surface)] p-5 hover:bg-[#1d1d1b] hover:-translate-y-0.5 transition-all"
           >
             <div className="w-9 h-9 rounded-md bg-[var(--color-accent)] flex items-center justify-center mb-3">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

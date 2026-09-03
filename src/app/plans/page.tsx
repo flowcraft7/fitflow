@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import PlanGenerator from './PlanGenerator'
 import ExerciseCheckbox from './ExerciseCheckbox'
+import Nav from '@/components/Nav'
 
 export default async function PlansPage() {
   const supabase = await createClient()
@@ -27,9 +28,13 @@ export default async function PlansPage() {
   const completedIds = new Set(completions?.map((c) => c.plan_exercise_id))
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <a href="/dashboard" className="text-sm text-gray-400">&larr; Back to Dashboard</a>
-      <h1 className="text-2xl font-bold mt-2 mb-6">Workout Plans</h1>
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] p-6 max-w-4xl mx-auto">
+      <Nav backHref="/dashboard" />
+
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-1 h-8 bg-[var(--color-accent)] rounded-full" />
+        <h1 className="text-3xl font-bold tracking-tight">Workout Plans</h1>
+      </div>
 
       <PlanGenerator />
 
@@ -43,23 +48,28 @@ export default async function PlansPage() {
           })
 
           return (
-            <div key={plan.id} className="rounded-lg border border-gray-700 p-4">
+            <div key={plan.id} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
               <h2 className="text-lg font-semibold">{plan.title}</h2>
-              <p className="text-sm text-gray-400 mb-3">Goal: {plan.goal}</p>
+              <p className="text-sm text-[var(--color-text-muted)] mb-4">Goal: {plan.goal}</p>
 
               {Object.entries(dayGroups).map(([day, exList]) => (
-                <div key={day} className="mb-4">
-                  <h3 className="text-sm font-semibold text-gray-300 mb-2">{day}</h3>
-                  <ul className="text-sm text-gray-400 space-y-2">
+                <div key={day} className="mb-5">
+                  <h3 className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide mb-2">
+                    {day}
+                  </h3>
+                  <ul className="space-y-2">
                     {exList
                       .sort((a: any, b: any) => a.order_index - b.order_index)
                       .map((pe: any) => (
-                        <li key={pe.id} className="flex items-center gap-2">
+                        <li
+                          key={pe.id}
+                          className="flex items-center gap-3 bg-[var(--color-bg)] rounded-md p-3 border border-[var(--color-border)]"
+                        >
                           <ExerciseCheckbox
                             planExerciseId={pe.id}
                             initialChecked={completedIds.has(pe.id)}
                           />
-                          <span>
+                          <span className="text-sm">
                             {pe.exercises?.name} — {pe.sets} sets x {pe.reps} reps
                           </span>
                         </li>

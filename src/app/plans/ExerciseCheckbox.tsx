@@ -27,7 +27,7 @@ export default function ExerciseCheckbox({
       checked={checked}
       onChange={handleToggle}
       disabled={loading}
-      className="w-4 h-4 accent-white"
+      className="w-4 h-4 accent-[var(--color-accent)]"
     />
   )
 }
