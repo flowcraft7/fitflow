@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { completeSignup } from '@/app/actions'
 
 export default function LoginPage() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSignUp, setIsSignUp] = useState(false)
@@ -27,7 +28,7 @@ export default function LoginPage() {
         return
       }
       if (data.user) {
-        const result = await completeSignup(data.user.id)
+        const result = await completeSignup(data.user.id, name)
         if (result.error) {
           setError(result.error)
           setLoading(false)
@@ -54,6 +55,17 @@ export default function LoginPage() {
             {isSignUp ? 'Start tracking your workouts' : 'Welcome back'}
           </p>
         </div>
+
+        {isSignUp && (
+          <input
+            type="text"
+            placeholder="Full name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5 text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
+          />
+        )}
 
         <input
           type="email"

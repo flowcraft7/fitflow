@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 
-export async function completeSignup(userId: string) {
+export async function completeSignup(userId: string, fullName: string) {
   const headersList = await headers()
   const subdomain = headersList.get('x-gym-subdomain')
 
@@ -25,7 +25,7 @@ export async function completeSignup(userId: string) {
 
   const { error: memberError } = await supabase
     .from('members')
-    .insert({ id: userId, gym_id: gym.id, role: 'member' })
+    .insert({ id: userId, gym_id: gym.id, role: 'member', full_name: fullName })
 
   if (memberError) {
     return { error: memberError.message }
